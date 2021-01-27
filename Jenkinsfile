@@ -20,7 +20,7 @@ pipeline {
                 sh "npm config ls"
                 sh "npm config set cache /root/npm/cache"
                 sh "npm config set prefix /root/npm/prefix"
-                sh 'npm i'
+                sh 'npm install --prefer-offline'
                 sh 'npm run build'
                 sh 'chmod -R 777 .'
                 sh 'pwd'
