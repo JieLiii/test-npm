@@ -17,13 +17,11 @@ pipeline {
             steps {
                 sh 'pwd'
                 sh "npm config set registry ${NPM_REPOS_ADDR}"
-                sh "npm config ls"
                 sh "npm config set cache /root/npm/cache"
                 sh "npm config set prefix /root/npm/prefix"
-                sh 'npm install --prefer-offline'
+                sh 'npm i'
                 sh 'npm run build'
                 sh 'chmod -R 777 .'
-                sh 'pwd'
                 sh 'ls'
                 script{
                     WORK_DIR = sh(returnStdout: true, script: 'pwd')
@@ -35,12 +33,12 @@ pipeline {
             steps {
                 echo "${WORK_DIR}"
                 sh "ls ${WORK_DIR}"
-                sh "cp -f dist/ ../${IMAGE_NAME}"
+                sh "cp -f dist ../${IMAGE_NAME}"
                 sh "docker login -u ${ALIYUN_REGISTRY_USER} -p ${ALIYUN_REGISTRY_PWD} ${ALIYUN_REGISTRY_ADDR}"
                 script{
                     WORK_DIR = sh(returnStdout: true, script: 'pwd')
                 }
-                sh "cp -f ../${IMAGE_NAME}/ ${WORK_DIR}"
+                sh "cp -f ../${IMAGE_NAME} ${WORK_DIR}"
                 sh "ls ${WORK_DIR}"
                 sh "docker build -t ${ALIYUN_REGISTRY_ADDR}/jackinjava/${IMAGE_NAME}:${BUILD_NUMBER} ."
                 sh 'docker push ${ALIYUN_REGISTRY_ADDR}/jackinjava/${IMAGE_NAME}:${BUILD_NUMBER}'
