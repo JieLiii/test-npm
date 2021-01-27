@@ -19,10 +19,10 @@ pipeline {
                 sh "npm config set registry ${NPM_REPOS_ADDR}"
                 sh "npm config set cache /root/npm/cache"
                 sh "npm config set prefix /root/npm/prefix"
-                sh 'npm i'
-                sh 'npm run build'
+                //sh 'npm i'
+                //sh 'npm run build'
                 sh 'chmod -R 777 .'
-                sh "cp -f dist ../${IMAGE_NAME}"
+                sh "cp -fr dist ../${IMAGE_NAME}"
                 sh 'ls'
                 script{
                     WORK_DIR = sh(returnStdout: true, script: 'pwd')
@@ -36,7 +36,7 @@ pipeline {
                 script{
                     WORK_DIR = sh(returnStdout: true, script: 'pwd')
                 }
-                sh "cp -f ../${IMAGE_NAME} ${WORK_DIR}"
+                sh "cp -fr ../${IMAGE_NAME} ${WORK_DIR}"
                 sh "ls ${WORK_DIR}"
                 sh "docker build -t ${ALIYUN_REGISTRY_ADDR}/jackinjava/${IMAGE_NAME}:${BUILD_NUMBER} ."
                 sh 'docker push ${ALIYUN_REGISTRY_ADDR}/jackinjava/${IMAGE_NAME}:${BUILD_NUMBER}'
