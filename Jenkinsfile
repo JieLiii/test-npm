@@ -19,7 +19,7 @@ pipeline {
                 sh "npm config set registry ${NPM_REPOS_ADDR}"
                 sh "npm config set cache /root/npm/cache"
                 sh "npm config set prefix /root/npm/prefix"
-                //sh 'npm i'
+                sh 'npm i'
                 sh 'npm run build'
                 sh 'chmod -R 777 .'
                 sh "cp -fr dist ../${IMAGE_NAME}"
