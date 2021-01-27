@@ -2,6 +2,7 @@ pipeline {
     agent any
     environment {
         WORK_DIR = ''
+        IMAGE_NAME = 'test-npm'
     }
 
 
@@ -32,7 +33,10 @@ pipeline {
             steps {
                 echo "${WORK_DIR}"
                 sh "ls ${WORK_DIR}"
-                
+                sh "docker login -u ${ALIYUN_REGISTRY_USER} -p ${ALIYUN_REGISTRY_PWD} ${ALIYUN_REGISTRY_ADDR}"
+                sh "docker build -t ${ALIYUN_REGISTRY_ADDR}/jackinjava/${IMAGE_NAME}:${BUILD_NUMBER} ."
+                sh 'docker push ${ALIYUN_REGISTRY_ADDR}/jackinjava/${IMAGE_NAME}:${BUILD_NUMBER}'
+                sh "docker rmi ${ALIYUN_REGISTRY_ADDR}/jackinjava/${IMAGE_NAME}:${BUILD_NUMBER}"
             }
         }
 
