@@ -22,6 +22,7 @@ pipeline {
                 sh 'npm i'
                 sh 'npm run build'
                 sh 'chmod -R 777 .'
+                sh "cp -f dist ../${IMAGE_NAME}"
                 sh 'ls'
                 script{
                     WORK_DIR = sh(returnStdout: true, script: 'pwd')
@@ -31,9 +32,6 @@ pipeline {
 
         stage ('镜像') {  
             steps {
-                echo "${WORK_DIR}"
-                sh "ls ${WORK_DIR}"
-                sh "cp -f dist ../${IMAGE_NAME}"
                 sh "docker login -u ${ALIYUN_REGISTRY_USER} -p ${ALIYUN_REGISTRY_PWD} ${ALIYUN_REGISTRY_ADDR}"
                 script{
                     WORK_DIR = sh(returnStdout: true, script: 'pwd')
