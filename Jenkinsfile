@@ -27,7 +27,6 @@ pipeline {
                 sh 'ls'
                 script{
                     WORK_DIR = sh(returnStdout: true, script: 'pwd')
-                    echo "$WORK_DIR"
                 }
             }
         }
@@ -38,7 +37,9 @@ pipeline {
                 sh "ls ${WORK_DIR}"
                 sh "cp -f dist/ ../${IMAGE_NAME}"
                 sh "docker login -u ${ALIYUN_REGISTRY_USER} -p ${ALIYUN_REGISTRY_PWD} ${ALIYUN_REGISTRY_ADDR}"
-                sh "pwd"
+                script{
+                    WORK_DIR = sh(returnStdout: true, script: 'pwd')
+                }
                 sh "cp -f ../${IMAGE_NAME}/ ${WORK_DIR}"
                 sh "ls ${WORK_DIR}"
                 sh "docker build -t ${ALIYUN_REGISTRY_ADDR}/jackinjava/${IMAGE_NAME}:${BUILD_NUMBER} ."
