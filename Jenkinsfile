@@ -17,8 +17,9 @@ pipeline {
             steps {
                 sh 'pwd'
                 sh "npm config set registry ${NPM_REPOS_ADDR}"
-                sh 'npm i'
-                sh 'npm run build'
+                sh "npm config ls"
+                //sh 'npm i'
+                //sh 'npm run build'
                 sh 'chmod -R 777 .'
                 sh 'pwd'
                 sh 'ls'
@@ -33,10 +34,10 @@ pipeline {
             steps {
                 echo "${WORK_DIR}"
                 sh "ls ${WORK_DIR}"
-                sh "docker login -u ${ALIYUN_REGISTRY_USER} -p ${ALIYUN_REGISTRY_PWD} ${ALIYUN_REGISTRY_ADDR}"
-                sh "docker build -t ${ALIYUN_REGISTRY_ADDR}/jackinjava/${IMAGE_NAME}:${BUILD_NUMBER} ."
-                sh 'docker push ${ALIYUN_REGISTRY_ADDR}/jackinjava/${IMAGE_NAME}:${BUILD_NUMBER}'
-                sh "docker rmi ${ALIYUN_REGISTRY_ADDR}/jackinjava/${IMAGE_NAME}:${BUILD_NUMBER}"
+                //sh "docker login -u ${ALIYUN_REGISTRY_USER} -p ${ALIYUN_REGISTRY_PWD} ${ALIYUN_REGISTRY_ADDR}"
+                //sh "docker build -t ${ALIYUN_REGISTRY_ADDR}/jackinjava/${IMAGE_NAME}:${BUILD_NUMBER} ."
+                //sh 'docker push ${ALIYUN_REGISTRY_ADDR}/jackinjava/${IMAGE_NAME}:${BUILD_NUMBER}'
+                //sh "docker rmi ${ALIYUN_REGISTRY_ADDR}/jackinjava/${IMAGE_NAME}:${BUILD_NUMBER}"
             }
         }
 
