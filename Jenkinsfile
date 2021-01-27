@@ -18,10 +18,10 @@ pipeline {
                 sh 'pwd'
                 sh "npm config set registry ${NPM_REPOS_ADDR}"
                 sh "npm config ls"
-                sh "npm config get cache"
-                sh "npm config get prefix"
-                //sh 'npm i'
-                //sh 'npm run build'
+                sh "npm config set cache /root/npm/cache"
+                sh "npm config set prefix /root/npm/prefix"
+                sh 'npm i'
+                sh 'npm run build'
                 sh 'chmod -R 777 .'
                 sh 'pwd'
                 sh 'ls'
